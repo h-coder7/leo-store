@@ -1,0 +1,102 @@
+"use client";
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { ShoppingCart, User, Search, Menu, X, Heart } from 'lucide-react';
+import { cn } from "@/lib/utils"; // Assuming cn utility exists in lib/utils
+
+export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navLinks = [
+    { name: 'الرئيسية', href: '/' },
+    { name: 'المنتجات', href: '/products' },
+    { name: 'الأقسام', href: '/categories' },
+    { name: 'العروض', href: '/offers' },
+  ];
+
+  return (
+    <nav className="sticky top-0 z-50 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          
+          {/* Logo Section (Right side for RTL) */}
+          <div className="flex-shrink-0 flex items-center">
+            <Link href="/" className="flex items-center gap-2">
+              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+                <span className="text-white font-black text-xl">L</span>
+              </div>
+              <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white hidden sm:block">
+                ليو <span className="text-blue-600">ستور</span>
+              </span>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation Links (Middle) */}
+          <div className="hidden md:flex items-center space-x-8 space-x-reverse">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white transition-colors"
+              >
+                {link.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Action Icons (Left side for RTL) */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            <button className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors hidden sm:flex">
+              <Search className="w-5 h-5" />
+            </button>
+            <button className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative">
+              <ShoppingCart className="w-5 h-5" />
+              <span className="absolute top-1 right-1 w-4 h-4 bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900">
+                0
+              </span>
+            </button>
+            <button className="hidden sm:flex p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+              <User className="w-5 h-5" />
+            </button>
+            
+            {/* Mobile Menu Button */}
+            <button 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      <div className={cn(
+        "md:hidden absolute w-full bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-all duration-300 ease-in-out overflow-hidden shadow-2xl",
+        isMenuOpen ? "max-h-96 py-4" : "max-h-0"
+      )}>
+        <div className="px-4 space-y-2">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              onClick={() => setIsMenuOpen(false)}
+              className="block px-4 py-3 text-base font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors"
+            >
+              {link.name}
+            </Link>
+          ))}
+          <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-around">
+            <button className="flex items-center gap-2 p-3 text-slate-600 dark:text-slate-400 font-bold">
+              <Search className="w-5 h-5" /> بحث
+            </button>
+            <button className="flex items-center gap-2 p-3 text-slate-600 dark:text-slate-400 font-bold">
+              <User className="w-5 h-5" /> الملف الشخصي
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+}
