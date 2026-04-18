@@ -8,11 +8,15 @@ export type Section = {
 
 export type Product = {
   id: number
-  title: string
+  name: string
   description: string | null
   price: number
   stock: number
-  image_url: string | null
+  images: string[] | null
+  sizes: string[] | null
+  colors: string[] | null
+  season: 'صيف' | 'شتاء' | 'كل الموسم' | null
+  section_id: number | null
   created_at: string
 }
 

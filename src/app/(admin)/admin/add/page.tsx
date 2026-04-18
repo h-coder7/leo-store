@@ -146,16 +146,17 @@ export default async function AddProductPage() {
           {/* Images */}
           <div>
             <label htmlFor="images" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-              روابط الصور (رابط واحد في كل سطر)
+              صور المنتج
             </label>
-            <textarea
+            <input
+              type="file"
               id="images"
               name="images"
-              rows={4}
-              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors resize-none font-mono text-sm"
-              placeholder={`https://example.com/image1.jpg\nhttps://example.com/image2.jpg`}
+              multiple
+              accept="image/*"
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-colors"
             />
-            <p className="text-xs text-slate-400 mt-1">ضع رابط كل صورة في سطر منفصل</p>
+            <p className="text-xs text-slate-400 mt-1">تستطيع اختيار أكثر من صورة معاً</p>
           </div>
 
           {/* Submit */}

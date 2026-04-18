@@ -50,12 +50,37 @@ export async function addProduct(formData: FormData) {
   const sizes = formData.getAll('sizes') as string[];
   const colors = formData.getAll('colors') as string[];
 
-  // Images: one URL per line inside textarea
-  const imagesRaw = (formData.get('images') as string) ?? '';
-  const images = imagesRaw
-    .split('\n')
-    .map((s) => s.trim())
-    .filter(Boolean);
+  // Images: Upload files to Supabase Storage
+  const imageFiles = formData.getAll('images') as File[];
+  const images: string[] = [];
+
+  for (const file of imageFiles) {
+    if (!file || file.size === 0) continue;
+
+    const fileExt = file.name.split('.').pop() || 'jpg';
+    const fileName = `products/${Date.now()}_${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
+
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    const { error: uploadError } = await supabase.storage
+      .from('images')
+      .upload(fileName, buffer, {
+        contentType: file.type,
+        upsert: false
+      });
+
+    if (uploadError) {
+      console.error('Error uploading file:', uploadError);
+      continue;
+    }
+
+    const { data: publicUrlData } = supabase.storage
+      .from('images')
+      .getPublicUrl(fileName);
+
+    images.push(publicUrlData.publicUrl);
+  }
 
   const { error } = await supabase.from('products').insert([
     {
@@ -71,7 +96,7 @@ export async function addProduct(formData: FormData) {
 
   if (error) {
     console.error('Error inserting product:', error);
-    return { error: error.message };
+    return;
   }
 
   revalidatePath('/admin/products');
@@ -91,7 +116,7 @@ export async function addSection(formData: FormData) {
 
   if (error) {
     console.error('Error inserting section:', error);
-    return { error: error.message };
+    return;
   }
 
   revalidatePath('/admin/sections');
