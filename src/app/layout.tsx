@@ -23,6 +23,7 @@ export default function RootLayout({
             lang="ar"
             dir="rtl"
             className={`${zain.variable} h-full antialiased`}
+            suppressHydrationWarning
         >
             <body className="min-h-full flex flex-col">
                 {children}

@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { logout } from '@/app/actions/auth';
-import { LayoutDashboard, Package, ShoppingBag, Settings, LogOut, ArrowRight, FolderOpen } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Settings, LogOut, ArrowRight, FolderOpen, Image as ImageIcon } from 'lucide-react';
 
 export default function AdminNavbar() {
     return (
@@ -24,6 +24,7 @@ export default function AdminNavbar() {
                         <div className="hidden md:flex items-center gap-6">
                             {[
                                 { name: 'الرئيسية', icon: LayoutDashboard, href: '/admin' },
+                                { name: 'البنرات', icon: ImageIcon, href: '/admin/banners' },
                                 { name: 'الأقسام', icon: FolderOpen, href: '/admin/sections' },
                                 { name: 'المنتجات', icon: Package, href: '/admin/products' },
                                 { name: 'الطلبات', icon: ShoppingBag, href: '/admin/orders' },

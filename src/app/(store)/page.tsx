@@ -3,16 +3,21 @@ import BannerSlider from '@/components/store/BannerSlider';
 import SectionCard from '@/components/store/SectionCard';
 import ProductCard from '@/components/store/ProductCard';
 import { getProducts, getSections } from '@/app/actions/products';
+import { getBanners } from '@/app/actions/banners';
 
 export const dynamic = 'force-dynamic';
 
 export default async function StorePage() {
-    const [products, sections] = await Promise.all([getProducts(), getSections()]);
+    const [products, sections, banners] = await Promise.all([
+        getProducts(), 
+        getSections(),
+        getBanners()
+    ]);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
             {/* Banner */}
-            <BannerSlider />
+            <BannerSlider banners={banners} />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16" dir="rtl">
 
