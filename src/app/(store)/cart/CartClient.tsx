@@ -78,7 +78,7 @@ export default function CartClient({ initialItems }: { initialItems: CartClientI
             <div className="flex flex-col items-center justify-center py-20 gap-6">
                 <div className="text-8xl">🛍️</div>
                 <h2 className="text-2xl font-black text-slate-700 dark:text-slate-300">السلة فارغة</h2>
-                <Link href="/" className="px-6 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors">
+                <Link href="/" className="px-6 py-3 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary/90 transition-colors">
                     تصفح المنتجات
                 </Link>
             </div>
@@ -103,10 +103,10 @@ export default function CartClient({ initialItems }: { initialItems: CartClientI
                         {/* Details */}
                         <div className="flex flex-col flex-1 gap-2">
                             <div className="flex justify-between items-start">
-                                <Link href={`/product/${item.product.id}`} className="font-bold text-lg text-slate-800 dark:text-white hover:text-blue-600 transition-colors">
+                                <Link href={`/product/${item.product.id}`} className="font-bold text-lg text-slate-800 dark:text-white hover:text-primary transition-colors">
                                     {item.product.name}
                                 </Link>
-                                <div className="font-black text-blue-600 dark:text-blue-400 whitespace-nowrap mr-4">
+                                <div className="font-black text-primary dark:text-primary whitespace-nowrap mr-4">
                                     {item.product.price.toLocaleString("ar-EG")} <span className="text-sm">ج.م</span>
                                 </div>
                             </div>

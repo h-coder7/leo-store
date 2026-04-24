@@ -2,6 +2,7 @@ import React from 'react';
 import { getProducts, getSections } from '@/app/actions/products';
 import Link from 'next/link';
 import type { Product, Section } from '@/lib/supabase/types';
+import DeleteProductButton from '@/components/admin/DeleteProductButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,7 +29,7 @@ export default async function ProductsAdminPage() {
                 </div>
                 <Link
                     href="/admin/add"
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                    className="bg-primary hover:opacity-90 text-primary-foreground font-bold py-3 px-6 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2"
                 >
                     <span className="text-xl leading-none">+</span>
                     إضافة منتج جديد
@@ -47,6 +48,7 @@ export default async function ProductsAdminPage() {
                                 <th className="p-4 font-bold text-slate-600 dark:text-slate-300">الموسم</th>
                                 <th className="p-4 font-bold text-slate-600 dark:text-slate-300">المقاسات</th>
                                 <th className="p-4 font-bold text-slate-600 dark:text-slate-300">تاريخ الإضافة</th>
+                                <th className="p-4 font-bold text-slate-600 dark:text-slate-300 text-center">الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -142,11 +144,38 @@ export default async function ProductsAdminPage() {
                                                 day: 'numeric',
                                             })}
                                         </td>
+
+                                        {/* Actions */}
+                                        <td className="p-4 whitespace-nowrap">
+                                            <div className="flex items-center justify-center gap-2">
+                                                <Link
+                                                    href={`/admin/products/${product.id}/edit`}
+                                                    className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                                                    title="تعديل"
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        className="h-5 w-5"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                                        />
+                                                    </svg>
+                                                </Link>
+                                                <DeleteProductButton productId={product.id} productName={product.name} />
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={6} className="p-16 text-center text-slate-500 dark:text-slate-400">
+                                    <td colSpan={7} className="p-16 text-center text-slate-500 dark:text-slate-400">
                                         <div className="text-5xl mb-4">🛍️</div>
                                         <div className="font-bold text-lg mb-2">لا توجد منتجات حالياً</div>
                                         <div className="text-sm">ابدأ بإضافة منتجك الأول!</div>

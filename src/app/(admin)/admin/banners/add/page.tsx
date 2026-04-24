@@ -5,7 +5,7 @@ import { ArrowLeft, Save, Image as ImageIcon } from 'lucide-react';
 
 export default function AddBannerPage() {
     const colorOptions = [
-        { name: 'أزرق', value: 'from-blue-600/80 to-blue-900/80', class: 'bg-blue-600' },
+        { name: 'ذهبي', value: 'from-amber-400/80 to-yellow-600/80', class: 'bg-amber-400' },
         { name: 'أخضر', value: 'from-emerald-600/80 to-emerald-900/80', class: 'bg-emerald-600' },
         { name: 'أحمر', value: 'from-rose-600/80 to-rose-900/80', class: 'bg-rose-600' },
         { name: 'بنفسجي', value: 'from-purple-600/80 to-purple-900/80', class: 'bg-purple-600' },

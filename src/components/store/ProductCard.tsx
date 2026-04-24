@@ -54,7 +54,7 @@ export default function ProductCard({ product }: Props) {
             {/* Info */}
             <div className="p-4 flex flex-col gap-2 flex-1">
                 {/* Name */}
-                <h3 className="font-bold text-slate-900 dark:text-white line-clamp-2 text-sm leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <h3 className="font-bold text-slate-900 dark:text-white line-clamp-2 text-sm leading-snug group-hover:text-primary transition-colors">
                     {product.name}
                 </h3>
 

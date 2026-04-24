@@ -2,19 +2,28 @@ import React from 'react';
 import BannerSlider from '@/components/store/BannerSlider';
 import SectionCard from '@/components/store/SectionCard';
 import ProductCard from '@/components/store/ProductCard';
+import TestimonialsSlider from '@/components/store/TestimonialsSlider';
+import OffersSlider from '@/components/store/OffersSlider';
 import { getProducts, getSections } from '@/app/actions/products';
 import { getBanners } from '@/app/actions/banners';
+import { getTestimonials } from '@/app/actions/testimonials';
+import { getOffers } from '@/app/actions/offers';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export const dynamic = 'force-dynamic';
 
 export default async function StorePage() {
-    const [products, sections, banners] = await Promise.all([
-        getProducts(), 
+    const [products, sections, banners, testimonials, offers] = await Promise.all([
+        getProducts(),
         getSections(),
-        getBanners()
+        getBanners(),
+        getTestimonials(),
+        getOffers()
     ]);
 
     return (
+
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
             {/* Banner */}
             <BannerSlider banners={banners} />
@@ -66,7 +75,15 @@ export default async function StorePage() {
                         </div>
                     )}
                 </section>
+
+                {/* ── Offers ── */}
+                <OffersSlider offers={offers} />
+
+                {/* ── Testimonials ── */}
+                <TestimonialsSlider testimonials={testimonials} />
             </div>
+
         </div>
+
     );
 }

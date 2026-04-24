@@ -27,7 +27,7 @@ export default async function ProductsPage({ searchParams }: Props) {
                 <div className="mb-8">
                     <Link
                         href="/"
-                        className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm mb-4 transition-colors font-semibold"
+                        className="inline-flex items-center gap-2 text-slate-500 hover:text-primary dark:hover:text-primary text-sm mb-4 transition-colors font-semibold"
                     >
                         ← العودة للرئيسية
                     </Link>
@@ -44,8 +44,8 @@ export default async function ProductsPage({ searchParams }: Props) {
                     <Link
                         href="/products"
                         className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-colors ${!sectionId
-                            ? 'bg-blue-600 text-white shadow-md'
-                            : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:text-blue-600'
+                            ? 'bg-primary text-primary-foreground shadow-md'
+                            : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary'
                             }`}
                     >
                         الكل
@@ -56,8 +56,8 @@ export default async function ProductsPage({ searchParams }: Props) {
                             key={section.id}
                             href={`/products?section=${section.id}`}
                             className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-colors ${sectionId === section.id
-                                ? 'bg-blue-600 text-white shadow-md'
-                                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:text-blue-600'
+                                ? 'bg-primary text-primary-foreground shadow-md'
+                                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-primary hover:text-primary'
                                 }`}
                         >
                             {section.name}

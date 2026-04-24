@@ -40,7 +40,7 @@ export default function SectionCard({ section }: Props) {
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
             ) : (
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-indigo-600 dark:from-blue-600 dark:to-indigo-900" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/60 dark:from-primary/80 dark:to-primary/40" />
             )}
 
             {/* Gradient overlay */}

@@ -28,7 +28,7 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
     if (!banners || banners.length === 0) return null;
 
     return (
-        <div className="w-full relative rounded-3xl overflow-hidden shadow-2xl mb-12" dir="rtl">
+        <div className="w-full relative rounded-3xl overflow-hidden shadow-2xl mb-12 px-10" dir="rtl">
             <Swiper
                 spaceBetween={0}
                 centeredSlides={true}

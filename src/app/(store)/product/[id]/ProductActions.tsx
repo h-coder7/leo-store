@@ -66,8 +66,8 @@ export default function ProductActions({ product }: { product: Product }) {
                                 onClick={() => setSelectedSize(s)}
                                 className={`px-4 py-2 rounded-xl border-2 text-sm font-bold transition-colors cursor-pointer
                   ${selectedSize === s
-                                        ? "border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400"
-                                        : "border-slate-200 text-slate-700 dark:border-slate-600 dark:text-slate-300 hover:border-blue-500 hover:text-blue-600"}
+                                        ? "border-primary text-primary dark:border-primary dark:text-primary"
+                                        : "border-slate-200 text-slate-700 dark:border-slate-600 dark:text-slate-300 hover:border-primary hover:text-primary"}
                 `}
                             >
                                 {s}
@@ -90,8 +90,8 @@ export default function ProductActions({ product }: { product: Product }) {
                                 onClick={() => setSelectedColor(c)}
                                 className={`px-4 py-2 rounded-xl text-sm font-semibold transition-colors cursor-pointer border-2
                   ${selectedColor === c
-                                        ? "border-blue-600 text-blue-600 bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:bg-blue-900/30"
-                                        : "border-transparent bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-blue-300"}
+                                        ? "border-primary text-primary bg-primary/10 dark:border-primary dark:text-primary dark:bg-primary/20"
+                                        : "border-transparent bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:border-primary/50"}
                 `}
                             >
                                 {c}
@@ -105,7 +105,7 @@ export default function ProductActions({ product }: { product: Product }) {
             <button
                 onClick={handleAddToCart}
                 disabled={isPending}
-                className="mt-4 w-full py-4 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 active:scale-95 text-white font-black text-lg rounded-2xl shadow-lg hover:shadow-blue-500/30 transition-all duration-200"
+                className="mt-4 w-full py-4 bg-primary hover:bg-primary/90 disabled:opacity-50 active:scale-95 text-primary-foreground font-black text-lg rounded-2xl shadow-lg hover:shadow-primary/30 transition-all duration-200"
             >
                 {isPending ? "جاري الإضافة..." : "🛒 أضف إلى السلة"}
             </button>

@@ -6,6 +6,7 @@ import { ShoppingCart, User, Search, Menu, X, Heart } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useCartStore } from '@/lib/store/cart';
 import { getCartItems } from '@/app/actions/cart';
+import Image from 'next/image';
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,12 +45,7 @@ export default function Navbar() {
                     {/* Logo Section (Right side for RTL) */}
                     <div className="flex-shrink-0 flex items-center">
                         <Link href="/" className="flex items-center gap-2">
-                            <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-                                <span className="text-white font-black text-xl">L</span>
-                            </div>
-                            <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white hidden sm:block">
-                                ليو <span className="text-blue-600">ستور</span>
-                            </span>
+                            <Image src="/logo.png" alt="Leo Store" width={100} height={100} />
                         </Link>
                     </div>
 
@@ -59,7 +55,7 @@ export default function Navbar() {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-white transition-colors"
+                                className="text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white transition-colors"
                             >
                                 {link.name}
                             </Link>
@@ -74,7 +70,7 @@ export default function Navbar() {
                         <Link href="/cart" className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative block">
                             <ShoppingCart className="w-5 h-5" />
                             {mounted && cartCount > 0 && (
-                                <span className="absolute top-1 right-1 w-4 h-4 bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900">
+                                <span className="absolute top-1 right-1 w-4 h-4 bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900">
                                     {cartCount > 9 ? '+9' : cartCount}
                                 </span>
                             )}

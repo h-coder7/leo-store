@@ -42,6 +42,16 @@ export type OrderItem = {
     image: string
 }
 
+export type Testimonial = {
+    id: number
+    name: string
+    role: string | null
+    content: string
+    rating: number
+    avatar_url: string | null
+    created_at: string
+}
+
 export type CartItem = {
     product_id: number
     name: string
@@ -50,4 +60,14 @@ export type CartItem = {
     size: string
     color: string
     image: string
+}
+
+export type Offer = {
+    id: number
+    title: string
+    description: string
+    discount_label: string
+    image_url: string
+    is_active: boolean
+    created_at: string
 }
