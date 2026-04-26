@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import type { Product } from '@/lib/supabase/types';
 import Link from 'next/link';
 import ProductActions from './ProductActions';
+import { ShoppingBag, Sparkles, Sun, Snowflake } from 'lucide-react';
 
 interface Props {
     params: Promise<{ id: string }>;
@@ -21,10 +22,10 @@ async function getProduct(id: string): Promise<Product | null> {
     return data as Product;
 }
 
-const seasonBadge: Record<string, { label: string; cls: string }> = {
-    صيف: { label: '☀️ صيفي', cls: 'bg-amber-100 text-amber-700' },
-    شتاء: { label: '❄️ شتوي', cls: 'bg-blue-100 text-blue-700' },
-    'كل الموسم': { label: '🌀 كل الموسم', cls: 'bg-emerald-100 text-emerald-700' },
+const seasonBadge: Record<string, { label: string; cls: string; icon: React.ReactNode }> = {
+    صيف: { label: 'صيفي', cls: 'bg-amber-100 text-amber-700', icon: <Sun className="w-3.5 h-3.5" /> },
+    شتاء: { label: 'شتوي', cls: 'bg-[#FCD201]/10 text-[#997500]', icon: <Snowflake className="w-3.5 h-3.5" /> },
+    'كل الموسم': { label: 'كل الموسم', cls: 'bg-emerald-100 text-emerald-700', icon: <Sparkles className="w-3.5 h-3.5" /> },
 };
 
 export default async function ProductDetailPage({ params }: Props) {
@@ -41,7 +42,7 @@ export default async function ProductDetailPage({ params }: Props) {
                 {/* Back */}
                 <Link
                     href="/"
-                    className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 text-sm mb-8 transition-colors"
+                    className="inline-flex items-center gap-2 text-slate-500 hover:text-[#997500] dark:hover:text-[#FCD201] text-sm mb-8 transition-colors"
                 >
                     ← العودة للمتجر
                 </Link>
@@ -58,7 +59,9 @@ export default async function ProductDetailPage({ params }: Props) {
                                     className="w-full h-full object-cover"
                                 />
                             ) : (
-                                <div className="w-full h-full flex items-center justify-center text-6xl">🛍️</div>
+                                <div className="w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600">
+                                    <ShoppingBag className="w-20 h-20" />
+                                </div>
                             )}
                         </div>
                         {/* Thumbnails */}
@@ -80,7 +83,8 @@ export default async function ProductDetailPage({ params }: Props) {
                     <div className="flex flex-col gap-5">
                         {/* Season & name */}
                         {badge && (
-                            <span className={`self-start text-xs font-bold px-3 py-1 rounded-full ${badge.cls}`}>
+                            <span className={`self-start text-xs font-black px-4 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm ${badge.cls}`}>
+                                {badge.icon}
                                 {badge.label}
                             </span>
                         )}
@@ -89,7 +93,7 @@ export default async function ProductDetailPage({ params }: Props) {
                         </h1>
 
                         {/* Price */}
-                        <div className="text-4xl font-black text-blue-600 dark:text-blue-400">
+                        <div className="text-4xl font-black text-[#997500] dark:text-[#FCD201]">
                             {product.price.toLocaleString('ar-EG')} <span className="text-xl font-bold">ج.م</span>
                         </div>
 

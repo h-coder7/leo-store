@@ -16,7 +16,7 @@ export default async function AdminBannersPage() {
                 </div>
                 <Link
                     href="/admin/banners/add"
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-blue-500/20"
+                    className="flex items-center gap-2 bg-[#FCD201] hover:bg-[#ebd201] text-[#1a1a1a] px-6 py-3 rounded-xl font-bold transition-all shadow-lg shadow-[#FCD201]/20"
                 >
                     <Plus className="w-5 h-5" />
                     إضافة بنر جديد

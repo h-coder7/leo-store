@@ -30,7 +30,7 @@ export default function LoginForm() {
                             type="email"
                             autoComplete="email"
                             required
-                            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#FCD201] focus:border-transparent outline-none transition-all"
                             placeholder="admin@example.com"
                             dir="ltr"
                         />
@@ -49,7 +49,7 @@ export default function LoginForm() {
                             type="password"
                             autoComplete="current-password"
                             required
-                            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-[#FCD201] focus:border-transparent outline-none transition-all"
                             placeholder="••••••••"
                             dir="ltr"
                         />
@@ -64,7 +64,7 @@ export default function LoginForm() {
 
                 <Button
                     type="submit"
-                    className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex justify-center items-center"
+                    className="w-full h-11 bg-[#FCD201] hover:bg-[#ebd201] text-[#1a1a1a] rounded-lg transition-colors flex justify-center items-center font-bold"
                     disabled={pending}
                 >
                     {pending ? (

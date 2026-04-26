@@ -4,7 +4,7 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Link from 'next/link';
-import { ArrowLeft, Sparkles, Star } from 'lucide-react';
+import { ArrowLeft, Sparkles, Star, Truck } from 'lucide-react';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -181,10 +181,13 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
 
                                     {/* Trust chips */}
                                     <div className="flex flex-wrap gap-3 mt-7">
-                                        {['🚚 توصيل سريع', '✨ جودة عالية'].map((chip) => (
+                                        {[
+                                            { text: 'توصيل سريع', icon: <Truck className="w-3.5 h-3.5" /> },
+                                            { text: 'جودة عالية', icon: <Sparkles className="w-3.5 h-3.5" /> }
+                                        ].map((chip) => (
                                             <span
-                                                key={chip}
-                                                className="px-3 py-1 rounded-full text-xs font-bold"
+                                                key={chip.text}
+                                                className="px-3 py-1.5 rounded-full text-[10px] font-black flex items-center gap-1.5"
                                                 style={{
                                                     background: 'rgba(255,255,255,0.40)',
                                                     backdropFilter: 'blur(8px)',
@@ -192,7 +195,8 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
                                                     border: '1px solid rgba(255,255,255,0.25)',
                                                 }}
                                             >
-                                                {chip}
+                                                {chip.icon}
+                                                {chip.text}
                                             </span>
                                         ))}
                                     </div>
@@ -210,7 +214,7 @@ export default function BannerSlider({ banners }: BannerSliderProps) {
                         <ArrowLeft className="w-5 h-5 rotate-180" />
                     </button>
                     <button className="hero-btn-prev w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105"
-                        style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(8px)', border: '2px solid rgba(255,255,255,0.3)', color: '#fff' }}>
+                        style={{ background: 'linear-gradient(135deg,#FCD201,#FFA000)', color: '#1a1a1a', boxShadow: '0 4px 18px rgba(252,210,1,0.5)' }}>
                         <ArrowLeft className="w-5 h-5" />
                     </button>
                 </div>

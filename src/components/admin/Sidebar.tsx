@@ -89,7 +89,7 @@ export default function AdminSidebar() {
                 <div className="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 space-y-2">
                     <Link
                         href="/"
-                        className="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-xl transition-all"
+                        className="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-[#997500] dark:text-[#FCD201] hover:bg-[#FCD201]/10 rounded-xl transition-all"
                     >
                         <ArrowRight className="w-4 h-4" />
                         العودة للمتجر

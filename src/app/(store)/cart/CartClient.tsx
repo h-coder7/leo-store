@@ -4,7 +4,7 @@ import React, { useState, useTransition } from "react";
 import Link from "next/link";
 import { removeFromCart, updateCartItemQuantity } from "@/app/actions/cart";
 import { toast } from "sonner";
-import { Trash2, Plus, Minus } from "lucide-react";
+import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import { useCartStore } from "@/lib/store/cart";
 
 type CartClientItem = {
@@ -75,10 +75,13 @@ export default function CartClient({ initialItems }: { initialItems: CartClientI
 
     if (items.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center py-20 gap-6">
-                <div className="text-8xl">🛍️</div>
-                <h2 className="text-2xl font-black text-slate-700 dark:text-slate-300">السلة فارغة</h2>
-                <Link href="/" className="px-6 py-3 bg-primary text-primary-foreground font-bold rounded-xl hover:bg-primary/90 transition-colors">
+            <div className="flex flex-col items-center justify-center py-20 gap-4">
+                <div className="w-24 h-24 rounded-full bg-[#FCD201]/10 flex items-center justify-center text-[#997500]">
+                    <ShoppingBag className="w-12 h-12" />
+                </div>
+                <h2 className="text-2xl font-black text-slate-800 dark:text-white">السلة فارغة حالياً</h2>
+                <p className="text-slate-500 font-bold mb-2">اكتشف أحدث صيحات الموضة للأطفال الآن!</p>
+                <Link href="/" className="px-10 py-3 bg-[#FCD201] text-[#1a1a1a] font-black rounded-xl hover:scale-105 transition-all shadow-lg shadow-[#FCD201]/20">
                     تصفح المنتجات
                 </Link>
             </div>
@@ -96,7 +99,9 @@ export default function CartClient({ initialItems }: { initialItems: CartClientI
                             {item.product.images?.[0] ? (
                                 <img src={item.product.images[0]} alt={item.product.name} className="w-full h-full object-cover" />
                             ) : (
-                                <div className="w-full h-full flex items-center justify-center text-4xl">🛍️</div>
+                                <div className="w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600">
+                                    <ShoppingBag className="w-8 h-8" />
+                                </div>
                             )}
                         </div>
 
@@ -166,12 +171,12 @@ export default function CartClient({ initialItems }: { initialItems: CartClientI
 
                 <div className="flex justify-between font-black text-xl text-slate-800 dark:text-white">
                     <span>الإجمالي</span>
-                    <span className="text-blue-600 dark:text-blue-400">{total.toLocaleString("ar-EG")} ج.م</span>
+                    <span className="text-[#997500] dark:text-[#FCD201]">{total.toLocaleString("ar-EG")} ج.م</span>
                 </div>
 
                 <Link 
                     href="/checkout"
-                    className="w-full py-4 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black text-lg rounded-xl shadow-lg hover:shadow-blue-500/30 transition-all duration-200 mt-2 flex items-center justify-center"
+                    className="w-full py-4 bg-[#FCD201] hover:bg-[#ebd201] active:scale-95 text-[#1a1a1a] font-black text-lg rounded-xl shadow-lg shadow-[#FCD201]/30 transition-all duration-200 mt-2 flex items-center justify-center"
                 >
                     إتمام الطلب
                 </Link>

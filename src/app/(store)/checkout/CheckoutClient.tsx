@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Truck, Smartphone, Wallet, CheckCircle2, Upload, Phone } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Truck, Smartphone, Wallet, CheckCircle2, Upload, Phone, ChevronDown, PartyPopper, ShoppingBag } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useCartStore } from '@/lib/store/cart';
@@ -25,22 +25,35 @@ export default function CheckoutClient({ initialItems }: { initialItems: Checkou
     const router = useRouter();
     const clearCart = useCartStore((state) => state.clearCart);
 
+    const [isMounted, setIsMounted] = useState(false);
     const [paymentMethod, setPaymentMethod] = useState<'cod' | 'vodafone' | 'instapay'>('cod');
+    const [isSuccess, setIsSuccess] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         address: '',
         phone: '',
+        governorate: '',
         transferNumber: '',
     });
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const subtotal = initialItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
     const total = subtotal;
 
+    if (!isMounted) return null;
+
+    const governorates = [
+        "القاهرة", "الجيزة", "الإسكندرية", "الدقهلية", "البحر الأحمر", "البحيرة", "الفيوم", "الغربية", "الإسماعيلية", "المنوفية", "المنيا", "القليوبية", "الوادي الجديد", "السويس", "الشرقية", "دمياط", "بورسعيد", "جنوب سيناء", "كفر الشيخ", "مطروح", "الأقصر", "قنا", "شمال سيناء", "سوهاج", "بني سويف", "أسيوط", "أسوان"
+    ];
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.name || !formData.address || !formData.phone) {
+        if (!formData.name || !formData.address || !formData.phone || !formData.governorate) {
             toast.error("يرجى ملأ جميع الحقول المطلوبة");
             return;
         }
@@ -52,6 +65,7 @@ export default function CheckoutClient({ initialItems }: { initialItems: Checkou
                 customer_name: formData.name,
                 phone: formData.phone,
                 address: formData.address,
+                governorate: formData.governorate,
                 payment_method: paymentMethod,
                 total: total,
                 transfer_number: formData.transferNumber,
@@ -69,9 +83,9 @@ export default function CheckoutClient({ initialItems }: { initialItems: Checkou
             const result = await createOrder(orderData);
 
             if (result.success) {
-                toast.success("تم إرسال طلبك بنجاح!");
                 clearCart();
-                router.push('/');
+                setIsSuccess(true);
+                toast.success("تم إرسال طلبك بنجاح!");
             }
         } catch (error) {
             console.error(error);
@@ -80,6 +94,33 @@ export default function CheckoutClient({ initialItems }: { initialItems: Checkou
             setIsLoading(false);
         }
     };
+
+    if (isSuccess) {
+        return (
+            <div className="bg-white dark:bg-slate-800 rounded-[3rem] p-10 sm:p-20 shadow-2xl border border-slate-100 dark:border-slate-700 text-center space-y-8 animate-in zoom-in-95 duration-500">
+                <div className="w-24 h-24 bg-emerald-100 dark:bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
+                    <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+                </div>
+                <div className="space-y-4">
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white flex items-center gap-3">
+                        تم إرسال طلبك بنجاح!
+                        <PartyPopper className="w-8 h-8 text-[#FCD201]" />
+                    </h2>
+                    <p className="text-lg sm:text-xl font-bold text-slate-500 leading-relaxed max-w-md mx-auto">
+                        نشكرك لثقتك بنا. سيتم التواصل معك خلال وقت قصير لتأكيد تفاصيل الأوردر وموعد التوصيل.
+                    </p>
+                </div>
+                <div className="pt-8">
+                    <button 
+                        onClick={() => router.push('/')}
+                        className="px-10 py-4 bg-[#FCD201] hover:bg-[#ebd201] text-[#1a1a1a] font-black text-lg rounded-2xl transition-all shadow-xl shadow-[#FCD201]/20 active:scale-95"
+                    >
+                        العودة للرئيسية
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <form onSubmit={handleSubmit} className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -103,7 +144,9 @@ export default function CheckoutClient({ initialItems }: { initialItems: Checkou
                                     {item.product.images?.[0] ? (
                                         <img src={item.product.images[0]} alt={item.product.name} className="w-full h-full object-cover" />
                                     ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-2xl">🛍️</div>
+                                        <div className="w-full h-full flex items-center justify-center text-slate-300 dark:text-slate-600">
+                                            <ShoppingBag className="w-6 h-6" />
+                                        </div>
                                     )}
                                 </div>
                                 <div className="flex flex-col gap-0.5">
@@ -171,6 +214,28 @@ export default function CheckoutClient({ initialItems }: { initialItems: Checkou
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-700 focus:border-[#FCD201] outline-none transition-all font-bold"
                     />
+                </div>
+
+                {/* Governorate Input */}
+                <div className="space-y-3">
+                    <label className="text-sm font-black text-slate-800 dark:text-slate-200 mr-2 flex items-center gap-2">
+                        <span>المحافظة</span>
+                        <span className="text-[#FCD201]">*</span>
+                    </label>
+                    <div className="relative">
+                        <select 
+                            required
+                            value={formData.governorate}
+                            onChange={(e) => setFormData({...formData, governorate: e.target.value})}
+                            className="w-full px-6 py-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-700 focus:border-[#FCD201] outline-none transition-all font-bold appearance-none cursor-pointer"
+                        >
+                            <option value="">اختر المحافظة</option>
+                            {governorates.map((gov) => (
+                                <option key={gov} value={gov}>{gov}</option>
+                            ))}
+                        </select>
+                        <ChevronDown className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5 pointer-events-none" />
+                    </div>
                 </div>
 
                 {/* Address Input */}

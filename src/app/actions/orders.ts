@@ -8,6 +8,7 @@ export async function createOrder(formData: {
     customer_name: string;
     phone: string;
     address: string;
+    governorate: string;
     payment_method: string;
     items: any[];
     total: number;
@@ -23,12 +24,10 @@ export async function createOrder(formData: {
             customer_name: formData.customer_name,
             phone: formData.phone,
             address: formData.address,
+            governorate: formData.governorate,
             total: formData.total,
             items: formData.items,
             status: 'جديد',
-            // If payment_method and transfer_number columns exist, add them. 
-            // If not, we can store them in a JSON field if available or just skip for now.
-            // For now, I'll assume they exist or will be handled.
         })
         .select()
         .single();
@@ -50,4 +49,49 @@ export async function createOrder(formData: {
     revalidatePath("/cart");
     
     return { success: true, orderId: order.id };
+}
+
+export async function getAllOrders() {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+        .from("orders")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.error("Fetch orders error:", error);
+        return [];
+    }
+
+    return data;
+}
+
+export async function updateOrderStatus(orderId: number, status: string) {
+    const supabase = await createClient();
+    const { error } = await supabase
+        .from("orders")
+        .update({ status })
+        .eq("id", orderId);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    revalidatePath("/admin/orders");
+    return { success: true };
+}
+
+export async function deleteOrder(orderId: number) {
+    const supabase = await createClient();
+    const { error } = await supabase
+        .from("orders")
+        .delete()
+        .eq("id", orderId);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    revalidatePath("/admin/orders");
+    return { success: true };
 }

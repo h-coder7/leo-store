@@ -3,12 +3,12 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Product } from '@/lib/supabase/types';
-import { Heart, ShoppingBag, Sparkles } from 'lucide-react';
+import { Heart, ShoppingBag, Sparkles, Sun, Snowflake } from 'lucide-react';
 
-const seasonBadge: Record<string, { label: string; emoji: string; bg: string; color: string }> = {
-    صيف:        { label: 'صيفي',      emoji: '☀️', bg: '#FFF3E0', color: '#E65100' },
-    شتاء:       { label: 'شتوي',      emoji: '❄️', bg: '#E3F2FD', color: '#1565C0' },
-    'كل الموسم':{ label: 'كل الموسم', emoji: '🌟', bg: '#F9FBE7', color: '#558B2F' },
+const seasonBadge: Record<string, { label: string; icon: React.ReactNode; bg: string; color: string }> = {
+    صيف: { label: 'صيفي', icon: <Sun className="w-3.5 h-3.5" />, bg: '#FFF3E0', color: '#E65100' },
+    شتاء: { label: 'شتوي', icon: <Snowflake className="w-3.5 h-3.5" />, bg: '#E3F2FD', color: '#1565C0' },
+    'كل الموسم': { label: 'كل الموسم', icon: <Sparkles className="w-3.5 h-3.5" />, bg: '#F9FBE7', color: '#558B2F' },
 };
 
 interface Props {
@@ -24,9 +24,9 @@ export default function ProductCard({ product }: Props) {
             href={`/product/${product.id}`}
             className="group flex flex-col rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 relative"
             style={{
-                background: '#ffffff',
-                boxShadow: '0 4px 24px rgba(252,210,1,0.10), 0 1px 4px rgba(0,0,0,0.06)',
-                border: '2px solid rgba(252,210,1,0.18)',
+                background: '#fff',
+                boxShadow: '5px 5px 30px #0001',
+                border: '2px solid #9993',
             }}
         >
             {/* Hover glow border */}
@@ -36,7 +36,7 @@ export default function ProductCard({ product }: Props) {
             />
 
             {/* ── Image ── */}
-            <div className="relative w-full aspect-[4/5] overflow-hidden rounded-t-[2rem]" style={{ background: '#FFFDE7' }}>
+            <div className="relative w-full aspect-[4/4] overflow-hidden rounded-t-[2rem]" style={{ background: '#FFFDE7' }}>
                 {mainImage ? (
                     <>
                         <img
@@ -47,7 +47,7 @@ export default function ProductCard({ product }: Props) {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </>
                 ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center" style={{ color: '#FCD201' }}>
+                    <div className="w-full h-full flex flex-col items-center justify-center text-[#FCD201]">
                         <ShoppingBag className="w-16 h-16 mb-2 opacity-40" />
                         <span className="text-xs font-bold text-slate-400">لا توجد صورة</span>
                     </div>
@@ -59,7 +59,7 @@ export default function ProductCard({ product }: Props) {
                         className="absolute top-3 right-3 text-[11px] font-black px-3 py-1.5 rounded-full flex items-center gap-1 shadow-md"
                         style={{ background: badge.bg, color: badge.color }}
                     >
-                        <span>{badge.emoji}</span>
+                        {badge.icon}
                         {badge.label}
                     </span>
                 )}
@@ -73,24 +73,6 @@ export default function ProductCard({ product }: Props) {
                         +{product.images.length - 1} صور
                     </span>
                 )}
-
-                {/* Quick actions */}
-                <div className="absolute top-3 left-3 flex flex-col gap-2 translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out z-10">
-                    <button
-                        className="w-9 h-9 rounded-full flex items-center justify-center shadow-lg transition-colors duration-300"
-                        style={{ background: 'rgba(255,255,255,0.95)' }}
-                        onClick={(e) => { e.preventDefault(); }}
-                    >
-                        <Heart className="w-4 h-4 text-rose-400 hover:text-rose-500" />
-                    </button>
-                    <button
-                        className="w-9 h-9 rounded-full flex items-center justify-center shadow-lg transition-colors duration-300"
-                        style={{ background: 'rgba(255,255,255,0.95)' }}
-                        onClick={(e) => { e.preventDefault(); }}
-                    >
-                        <ShoppingBag className="w-4 h-4" style={{ color: '#FFA000' }} />
-                    </button>
-                </div>
             </div>
 
             {/* ── Info ── */}
@@ -116,11 +98,8 @@ export default function ProductCard({ product }: Props) {
                     {product.name}
                 </h3>
 
-                {/* Divider */}
-                <div className="h-px w-full rounded-full mt-auto" style={{ background: 'linear-gradient(to right, #FCD201, transparent)' }} />
-
                 {/* Attributes */}
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 mt-auto">
                     {product.sizes && product.sizes.length > 0 && (
                         <div className="flex items-center gap-2">
                             <span className="text-[10px] font-bold text-slate-400 shrink-0">المقاس</span>
@@ -134,23 +113,19 @@ export default function ProductCard({ product }: Props) {
                                         {s}
                                     </span>
                                 ))}
-                                {product.sizes.length > 3 && (
-                                    <span className="px-2 py-0.5 rounded-lg text-[10px] font-black bg-slate-100 text-slate-500">
-                                        +{product.sizes.length - 3}
-                                    </span>
-                                )}
                             </div>
                         </div>
                     )}
+                </div>
 
-                    {product.colors && product.colors.length > 0 && (
-                        <div className="flex items-center gap-2">
-                            <span className="text-[10px] font-bold text-slate-400 shrink-0">الألوان</span>
-                            <span className="text-[11px] font-semibold text-slate-600 line-clamp-1">
-                                {product.colors.join('، ')}
-                            </span>
-                        </div>
-                    )}
+                {/* Add to Cart Button (Flat) */}
+                <div className="pt-2">
+                    <div
+                        className="w-full py-3 bg-[#f5f5f5] text-[#1a1a1a] font-black text-sm rounded-xl flex items-center justify-center gap-2 transition-all duration-300 group-hover:bg-[#1a1a1a] group-hover:text-white"
+                    >
+                        <ShoppingBag className="w-4 h-4" />
+                        <span>عرض المنتج</span>
+                    </div>
                 </div>
             </div>
         </Link>

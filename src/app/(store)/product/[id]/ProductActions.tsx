@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { ShoppingCart, Loader2 } from "lucide-react";
 import type { Product } from "@/lib/supabase/types";
 import { addToCart } from "@/app/actions/cart";
 import { toast } from "sonner";
@@ -105,9 +106,19 @@ export default function ProductActions({ product }: { product: Product }) {
             <button
                 onClick={handleAddToCart}
                 disabled={isPending}
-                className="mt-4 w-full py-4 bg-primary hover:bg-primary/90 disabled:opacity-50 active:scale-95 text-primary-foreground font-black text-lg rounded-2xl shadow-lg hover:shadow-primary/30 transition-all duration-200"
+                className="mt-4 w-full py-4 bg-[#FCD201] hover:bg-[#ebd201] disabled:opacity-50 active:scale-95 text-[#1a1a1a] font-black text-lg rounded-2xl shadow-lg shadow-[#FCD201]/30 transition-all duration-200 flex items-center justify-center gap-3"
             >
-                {isPending ? "جاري الإضافة..." : "🛒 أضف إلى السلة"}
+                {isPending ? (
+                    <>
+                        <Loader2 className="w-5 h-5 animate-spin" />
+                        <span>جاري الإضافة...</span>
+                    </>
+                ) : (
+                    <>
+                        <ShoppingCart className="w-6 h-6" />
+                        <span>أضف إلى السلة</span>
+                    </>
+                )}
             </button>
         </div>
     );

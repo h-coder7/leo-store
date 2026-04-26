@@ -3,6 +3,7 @@ import { getProducts, getSections } from '@/app/actions/products';
 import Link from 'next/link';
 import type { Product, Section } from '@/lib/supabase/types';
 import DeleteProductButton from '@/components/admin/DeleteProductButton';
+import { ShoppingBag } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -67,8 +68,8 @@ export default async function ProductsAdminPage() {
                                                         style={{ backgroundImage: `url(${product.images[0]})` }}
                                                     />
                                                 ) : (
-                                                    <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-700 shrink-0 flex items-center justify-center text-xl">
-                                                        🛍️
+                                                    <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-slate-700 shrink-0 flex items-center justify-center text-slate-400">
+                                                        <ShoppingBag className="w-6 h-6" />
                                                     </div>
                                                 )}
                                                 <div>
@@ -176,7 +177,11 @@ export default async function ProductsAdminPage() {
                             ) : (
                                 <tr>
                                     <td colSpan={7} className="p-16 text-center text-slate-500 dark:text-slate-400">
-                                        <div className="text-5xl mb-4">🛍️</div>
+                                        <div className="flex justify-center mb-4">
+                                            <div className="w-20 h-20 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                                                <ShoppingBag className="w-10 h-10 text-slate-300 dark:text-slate-600" />
+                                            </div>
+                                        </div>
                                         <div className="font-bold text-lg mb-2">لا توجد منتجات حالياً</div>
                                         <div className="text-sm">ابدأ بإضافة منتجك الأول!</div>
                                     </td>

@@ -45,8 +45,8 @@ export default function TestimonialsSlider({ testimonials }: TestimonialsSliderP
                     spaceBetween={24}
                     slidesPerView={1}
                     breakpoints={{
-                        640:  { slidesPerView: 1 },
-                        768:  { slidesPerView: 2 },
+                        640: { slidesPerView: 1 },
+                        768: { slidesPerView: 2 },
                         1024: { slidesPerView: 3 },
                     }}
                     autoplay={{ delay: 4000, disableOnInteraction: false }}
@@ -58,12 +58,11 @@ export default function TestimonialsSlider({ testimonials }: TestimonialsSliderP
                     {testimonials.map((item, index) => (
                         <SwiperSlide key={item.id}>
                             <div
-                                className="p-6 h-full flex flex-col relative group hover:-translate-y-1 transition-all duration-400"
+                                className="p-6 shadow-md m-3 h-full flex flex-col relative group hover:-translate-y-1 transition-all duration-400"
                                 style={{
                                     background: '#ffffff',
                                     borderRadius: '2rem',
-                                    border: '2px solid rgba(252,210,1,0.18)',
-                                    boxShadow: '0 4px 24px rgba(252,210,1,0.10), 0 1px 4px rgba(0,0,0,0.06)',
+                                    // border: '3px solid #9993',
                                 }}
                             >
                                 {/* Corner accent */}
@@ -73,8 +72,8 @@ export default function TestimonialsSlider({ testimonials }: TestimonialsSliderP
                                         background: index % 3 === 0
                                             ? 'linear-gradient(135deg, rgba(252,210,1,0.15), rgba(255,160,0,0.08))'
                                             : index % 3 === 1
-                                            ? 'linear-gradient(135deg, rgba(96,165,250,0.12), rgba(59,130,246,0.06))'
-                                            : 'linear-gradient(135deg, rgba(244,114,182,0.12), rgba(236,72,153,0.06))',
+                                                ? 'linear-gradient(135deg, rgba(96,165,250,0.12), rgba(59,130,246,0.06))'
+                                                : 'linear-gradient(135deg, rgba(244,114,182,0.12), rgba(236,72,153,0.06))',
                                     }}
                                 />
 

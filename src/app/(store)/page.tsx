@@ -8,6 +8,7 @@ import { getProducts, getSections } from '@/app/actions/products';
 import { getBanners } from '@/app/actions/banners';
 import { getTestimonials } from '@/app/actions/testimonials';
 import { getOffers } from '@/app/actions/offers';
+import { Palette, Folder, ShoppingBag } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,7 +43,7 @@ export default async function StorePage() {
                     <div className="flex items-center gap-4 mb-8">
                         {/* Decorative pill */}
                         <div className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-black shadow-lg" style={{ background: 'linear-gradient(135deg, #FCD201, #FFA000)', color: '#1a1a1a' }}>
-                            <span className="text-lg">🎨</span>
+                            <Palette className="w-4 h-4" />
                             <span>الأقسام</span>
                         </div>
                         <div className="flex-1 h-px" style={{ background: 'linear-gradient(to left, transparent, #FCD201, transparent)' }} />
@@ -57,7 +58,7 @@ export default async function StorePage() {
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center py-16 rounded-3xl border-2 border-dashed" style={{ background: 'rgba(252,210,1,0.05)', borderColor: '#FCD201' }}>
-                            <span className="text-5xl mb-3">📁</span>
+                            <Folder className="w-12 h-12 mb-3 text-[#FCD201] opacity-40" />
                             <p className="text-base font-black" style={{ color: '#b8860b' }}>لا توجد أقسام حالياً</p>
                         </div>
                     )}
@@ -67,7 +68,7 @@ export default async function StorePage() {
                 <section className="mt-20">
                     <div className="flex items-center gap-4 mb-10">
                         <div className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-black shadow-lg" style={{ background: 'linear-gradient(135deg, #FCD201, #FFA000)', color: '#1a1a1a' }}>
-                            <span className="text-lg">🛍️</span>
+                            <ShoppingBag className="w-4 h-4" />
                             <span>أحدث المنتجات</span>
                         </div>
                         <div className="flex-1 h-px" style={{ background: 'linear-gradient(to left, transparent, #FCD201, transparent)' }} />
@@ -84,7 +85,7 @@ export default async function StorePage() {
                         </div>
                     ) : (
                         <div className="flex flex-col items-center justify-center py-28 rounded-3xl border-2 border-dashed" style={{ background: 'rgba(252,210,1,0.05)', borderColor: '#FCD201' }}>
-                            <span className="text-7xl mb-5">🛍️</span>
+                            <ShoppingBag className="w-20 h-20 mb-5 text-[#FCD201] opacity-40" />
                             <p className="text-lg font-black" style={{ color: '#b8860b' }}>لا توجد منتجات حالياً</p>
                             <p className="text-sm mt-1 text-slate-500">تابعنا قريباً لمزيد من المنتجات!</p>
                         </div>

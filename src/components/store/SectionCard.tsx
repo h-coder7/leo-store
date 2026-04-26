@@ -1,24 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Section } from '@/lib/supabase/types';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, User, Tag } from 'lucide-react';
 
-const parentLabels: Record<string, { label: string; emoji: string; pill: string; pillText: string }> = {
+const parentLabels: Record<string, { label: string; icon: React.ReactNode; pill: string; pillText: string }> = {
     boy: {
         label: 'أولاد',
-        emoji: '👦',
+        icon: <User className="w-3.5 h-3.5" />,
         pill: 'linear-gradient(135deg, #60a5fa, #3b82f6)',
         pillText: '#ffffff',
     },
     girl: {
         label: 'بنات',
-        emoji: '👧',
+        icon: <User className="w-3.5 h-3.5" />,
         pill: 'linear-gradient(135deg, #f472b6, #ec4899)',
         pillText: '#ffffff',
     },
     offers: {
         label: 'عروض',
-        emoji: '🏷️',
+        icon: <Tag className="w-3.5 h-3.5" />,
         pill: 'linear-gradient(135deg, #FCD201, #FFA000)',
         pillText: '#1a1a1a',
     },
@@ -76,7 +76,7 @@ export default function SectionCard({ section }: Props) {
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black shadow-md backdrop-blur-sm transition-transform duration-300 group-hover:scale-105"
                         style={{ background: parent.pill, color: parent.pillText }}
                     >
-                        <span className="text-sm">{parent.emoji}</span>
+                        {parent.icon}
                         {parent.label}
                     </span>
                 </div>

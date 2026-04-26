@@ -4,7 +4,7 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Link from 'next/link';
-import { Tag } from 'lucide-react';
+import { Tag, ArrowLeft, Sparkles, Zap } from 'lucide-react';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -17,9 +17,7 @@ interface OffersSliderProps {
 }
 
 export default function OffersSlider({ offers }: OffersSliderProps) {
-    if (!offers || offers.length === 0) {
-        return null;
-    }
+    if (!offers || offers.length === 0) return null;
 
     return (
         <section className="mt-20 mb-4" dir="rtl">
@@ -38,73 +36,116 @@ export default function OffersSlider({ offers }: OffersSliderProps) {
 
             <div className="relative">
                 <Swiper
-                    spaceBetween={20}
+                    spaceBetween={24}
                     slidesPerView={1}
                     breakpoints={{
-                        640:  { slidesPerView: 1 },
-                        768:  { slidesPerView: 2 },
+                        640: { slidesPerView: 1 },
+                        768: { slidesPerView: 2 },
                         1024: { slidesPerView: 2 },
                     }}
                     autoplay={{ delay: 5000, disableOnInteraction: false }}
                     pagination={{ clickable: true, dynamicBullets: true }}
                     navigation={true}
                     modules={[Autoplay, Pagination, Navigation]}
-                    className="pb-12 offers-swiper"
+                    className="pb-14 offers-swiper"
                 >
-                    {offers.map((offer) => (
+                    {offers.map((offer, index) => (
                         <SwiperSlide key={offer.id}>
-                            <Link href="/products" className="block h-full">
+                            <Link href="/products" className="block h-full group">
                                 <div
-                                    className="h-full flex flex-col overflow-hidden group transition-all duration-400 hover:-translate-y-1"
+                                    className="relative overflow-hidden transition-all duration-500 border-2"
                                     style={{
-                                        background: '#ffffff',
                                         borderRadius: '2rem',
-                                        border: '2px solid rgba(252,210,1,0.2)',
-                                        boxShadow: '0 4px 24px rgba(252,210,1,0.10), 0 1px 4px rgba(0,0,0,0.06)',
+                                        minHeight: '360px',
                                     }}
                                 >
-                                    {/* Image */}
-                                    <div className="relative aspect-[16/9] w-full overflow-hidden" style={{ borderRadius: '2rem 2rem 0 0' }}>
+                                    {/* ── Background Image ── */}
+                                    <div className="absolute inset-0">
                                         <img
                                             src={offer.image_url}
                                             alt={offer.title}
-                                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
-                                        {/* Overlay on hover */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
+                                    </div>
 
-                                        {/* Discount label */}
+                                    {/* ── Rich Dark Gradient Overlay ── */}
+                                    {/* <div
+                                        className="absolute inset-0"
+                                        style={{
+                                            background: index % 2 === 0
+                                                ? 'linear-gradient(135deg, rgba(26,26,26,0.82) 0%, rgba(26,26,26,0.45) 55%, rgba(252,210,1,0.15) 100%)'
+                                                : 'linear-gradient(135deg, rgba(26,26,26,0.82) 0%, rgba(26,26,26,0.45) 55%, rgba(255,160,0,0.18) 100%)',
+                                        }}
+                                    /> */}
+
+                                    {/* ── Animated glow border on hover ── */}
+                                    <div
+                                        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                                        style={{
+                                            borderRadius: '2rem',
+                                            boxShadow: 'inset 0 0 0 2.5px #FCD201, 0 0 40px rgba(252,210,1,0.25)',
+                                        }}
+                                    />
+
+                                    {/* ── Decorative sparkle dots ── */}
+                                    <Sparkles
+                                        className="absolute top-5 left-5 opacity-20 group-hover:opacity-40 transition-opacity duration-500 text-[#FCD201]"
+                                        style={{ width: 28, height: 28 }}
+                                    />
+                                    <div
+                                        className="absolute bottom-28 left-6 w-2 h-2 rounded-full opacity-30 group-hover:opacity-60 transition-opacity duration-500"
+                                        style={{ background: '#FCD201' }}
+                                    />
+                                    <div
+                                        className="absolute top-14 left-12 w-1.5 h-1.5 rounded-full opacity-20"
+                                        style={{ background: '#FFA000' }}
+                                    />
+
+                                    {/* ── Discount Badge ── */}
+                                    <div className="absolute top-5 right-5 z-10">
                                         <div
-                                            className="absolute top-4 right-4 font-black px-4 py-2 rounded-2xl shadow-xl text-sm transform rotate-2 group-hover:rotate-4 group-hover:-translate-y-1 transition-all duration-300"
+                                            className="relative flex flex-col items-center justify-center font-black shadow-2xl transition-all duration-300 group-hover:-rotate-6 group-hover:scale-110"
                                             style={{
                                                 background: 'linear-gradient(135deg, #FCD201, #FFA000)',
                                                 color: '#1a1a1a',
-                                                boxShadow: '0 4px 18px rgba(252,210,1,0.5)',
+                                                borderRadius: '1rem',
+                                                padding: '10px 18px',
+                                                boxShadow: '0 6px 24px rgba(252,210,1,0.55)',
+                                                minWidth: 72,
                                             }}
                                         >
-                                            {offer.discount_label}
+                                            <Zap className="w-3.5 h-3.5 mb-0.5" />
+                                            <span className="text-xs font-black leading-none">{offer.discount_label}</span>
                                         </div>
                                     </div>
 
-                                    {/* Content */}
-                                    <div className="p-6 flex-grow flex flex-col justify-center text-center relative">
-                                        {/* Decorative dots */}
-                                        <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-                                            {[1,2,3].map(i => (
-                                                <div key={i} className="w-1 h-1 rounded-full" style={{ background: i === 2 ? '#FCD201' : 'rgba(252,210,1,0.35)' }} />
-                                            ))}
-                                        </div>
-                                        <h3 className="text-lg font-black text-slate-800 mb-2 group-hover:text-yellow-700 transition-colors duration-300">
+                                    {/* ── Content ── */}
+                                    <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
+                                        {/* Title */}
+                                        <h3
+                                            className="text-2xl font-black mb-1.5 leading-tight"
+                                            style={{ color: '#000', textShadow: '0 2px 12px rgba(0,0,0,0.5)' }}
+                                        >
                                             {offer.title}
                                         </h3>
-                                        <p className="text-slate-500 text-sm leading-relaxed">
+
+                                        {/* Description */}
+                                        <p className="text-sm font-semibold mb-5 leading-relaxed" style={{ color: '#777' }}>
                                             {offer.description}
                                         </p>
-                                        {/* CTA line */}
+
+                                        {/* CTA Button */}
                                         <div
-                                            className="mt-4 mx-auto h-1 w-12 rounded-full transition-all duration-400 group-hover:w-20"
-                                            style={{ background: 'linear-gradient(to right, #FCD201, #FFA000)' }}
-                                        />
+                                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-black text-sm transition-all duration-300 group-hover:gap-3"
+                                            style={{
+                                                background: 'linear-gradient(135deg, #FCD201, #FFA000)',
+                                                color: '#1a1a1a',
+                                                boxShadow: '0 4px 18px rgba(252,210,1,0.45)',
+                                            }}
+                                        >
+                                            تسوق الآن
+                                            <ArrowLeft className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-1" />
+                                        </div>
                                     </div>
                                 </div>
                             </Link>
@@ -118,15 +159,16 @@ export default function OffersSlider({ offers }: OffersSliderProps) {
                 .offers-swiper .swiper-button-prev {
                     color: #1a1a1a !important;
                     background: linear-gradient(135deg, #FCD201, #FFA000) !important;
-                    width: 42px !important;
-                    height: 42px !important;
+                    width: 44px !important;
+                    height: 44px !important;
                     border-radius: 50% !important;
-                    box-shadow: 0 4px 16px rgba(252,210,1,0.45) !important;
-                    transition: transform 0.3s !important;
+                    box-shadow: 0 4px 18px rgba(252,210,1,0.5) !important;
+                    transition: transform 0.3s, box-shadow 0.3s !important;
                 }
                 .offers-swiper .swiper-button-next:hover,
                 .offers-swiper .swiper-button-prev:hover {
-                    transform: scale(1.1) !important;
+                    transform: scale(1.12) !important;
+                    box-shadow: 0 6px 28px rgba(252,210,1,0.65) !important;
                 }
                 .offers-swiper .swiper-button-next:after,
                 .offers-swiper .swiper-button-prev:after {
@@ -134,12 +176,14 @@ export default function OffersSlider({ offers }: OffersSliderProps) {
                     font-weight: 900 !important;
                 }
                 .offers-swiper .swiper-pagination-bullet {
-                    background: rgba(252,210,1,0.3) !important;
+                    background: rgba(252,210,1,0.35) !important;
                     opacity: 1 !important;
+                    transition: all 0.3s !important;
                 }
                 .offers-swiper .swiper-pagination-bullet-active {
                     background: #FCD201 !important;
-                    transform: scale(1.3) !important;
+                    transform: scale(1.4) !important;
+                    box-shadow: 0 0 8px rgba(252,210,1,0.6) !important;
                 }
             `}</style>
         </section>

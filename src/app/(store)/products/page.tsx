@@ -2,6 +2,7 @@ import React from 'react';
 import { getProducts, getSections } from '@/app/actions/products';
 import ProductCard from '@/components/store/ProductCard';
 import Link from 'next/link';
+import { ShoppingBag } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 
@@ -74,7 +75,7 @@ export default async function ProductsPage({ searchParams }: Props) {
                     </div>
                 ) : (
                     <div className="flex flex-col items-center justify-center py-24 text-slate-400 dark:text-slate-600 bg-white/50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                        <span className="text-6xl mb-4">🛍️</span>
+                        <ShoppingBag className="w-16 h-16 mb-4 opacity-20" />
                         <p className="text-lg font-bold">لا توجد منتجات في هذا القسم بعد</p>
                     </div>
                 )}

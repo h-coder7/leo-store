@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, User, Search, Menu, X, Heart } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { useCartStore } from '@/lib/store/cart';
 import { getCartItems } from '@/app/actions/cart';
@@ -33,13 +33,12 @@ export default function Navbar() {
     const navLinks = [
         { name: 'الرئيسية', href: '/' },
         { name: 'المنتجات', href: '/products' },
-        { name: 'الأقسام', href: '/categories' },
-        { name: 'العروض', href: '/offers' },
+        { name: 'أتصل بنا', href: '/contact' },
     ];
 
     return (
         <nav className="sticky top-0 z-50 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
                 <div className="flex justify-between items-center h-20">
 
                     {/* Logo Section (Right side for RTL) */}
@@ -50,7 +49,7 @@ export default function Navbar() {
                     </div>
 
                     {/* Desktop Navigation Links (Middle) */}
-                    <div className="hidden md:flex items-center space-x-8 space-x-reverse">
+                    <div className="hidden md:flex items-center space-x-8">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
@@ -64,20 +63,14 @@ export default function Navbar() {
 
                     {/* Action Icons (Left side for RTL) */}
                     <div className="flex items-center gap-2 sm:gap-4">
-                        <button className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors hidden sm:flex">
-                            <Search className="w-5 h-5" />
-                        </button>
-                        <Link href="/cart" className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative block">
-                            <ShoppingCart className="w-5 h-5" />
+                        <Link href="/cart" className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative flex items-center gap-2 border px-5">
+                            <ShoppingCart className="w-5 h-5" /> <span className='text-sm font-bold text-slate-600 dark:text-slate-300'>السلة</span>
                             {mounted && cartCount > 0 && (
-                                <span className="absolute top-1 right-1 w-4 h-4 bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900">
+                                <span className="absolute top-1 right-1 w-5 h-5 bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900">
                                     {cartCount > 9 ? '+9' : cartCount}
                                 </span>
                             )}
                         </Link>
-                        <button className="hidden sm:flex p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
-                            <User className="w-5 h-5" />
-                        </button>
 
                         {/* Mobile Menu Button */}
                         <button
@@ -109,9 +102,6 @@ export default function Navbar() {
                     <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-around">
                         <button className="flex items-center gap-2 p-3 text-slate-600 dark:text-slate-400 font-bold">
                             <Search className="w-5 h-5" /> بحث
-                        </button>
-                        <button className="flex items-center gap-2 p-3 text-slate-600 dark:text-slate-400 font-bold">
-                            <User className="w-5 h-5" /> الملف الشخصي
                         </button>
                     </div>
                 </div>
