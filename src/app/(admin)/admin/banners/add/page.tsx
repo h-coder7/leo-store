@@ -4,13 +4,6 @@ import { addBanner } from '@/app/actions/banners';
 import { ArrowLeft, Save, Image as ImageIcon } from 'lucide-react';
 
 export default function AddBannerPage() {
-    const colorOptions = [
-        { name: 'ذهبي', value: 'from-amber-400/80 to-yellow-600/80', class: 'bg-amber-400' },
-        { name: 'أخضر', value: 'from-emerald-600/80 to-emerald-900/80', class: 'bg-emerald-600' },
-        { name: 'أحمر', value: 'from-rose-600/80 to-rose-900/80', class: 'bg-rose-600' },
-        { name: 'بنفسجي', value: 'from-purple-600/80 to-purple-900/80', class: 'bg-purple-600' },
-        { name: 'أسود', value: 'from-slate-800/80 to-black/80', class: 'bg-slate-800' },
-    ];
 
     return (
         <div className="p-8 max-w-4xl mx-auto" dir="rtl">
@@ -61,35 +54,17 @@ export default function AddBannerPage() {
                         ></textarea>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-slate-700 dark:text-slate-300 px-1">نص الزر</label>
-                            <input
-                                name="button_text"
-                                type="text"
-                                defaultValue="تسوق الآن"
-                                className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 outline-none focus:border-blue-500 transition-all font-bold"
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label className="text-sm font-bold text-slate-700 dark:text-slate-300 px-1">اختر اللون المفضل</label>
-                            <div className="flex gap-3">
-                                {colorOptions.map((option) => (
-                                    <label key={option.value} className="cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="color"
-                                            value={option.value}
-                                            defaultChecked={option.value === 'from-blue-600/80 to-blue-900/80'}
-                                            className="sr-only peer"
-                                        />
-                                        <div className={`w-10 h-10 rounded-full border-2 border-transparent peer-checked:border-blue-500 peer-checked:scale-110 shadow-sm transition-all ${option.class}`}></div>
-                                    </label>
-                                ))}
-                            </div>
-                        </div>
+                    <div className="space-y-2 mb-6">
+                        <label className="text-sm font-bold text-slate-700 dark:text-slate-300 px-1">نص الزر</label>
+                        <input
+                            name="button_text"
+                            type="text"
+                            defaultValue="تسوق الآن"
+                            className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 outline-none focus:border-blue-500 transition-all font-bold"
+                        />
                     </div>
+                    {/* Hidden color field — kept for DB compatibility but not shown */}
+                    <input type="hidden" name="color" value="" />
 
                     <div className="space-y-2">
                         <label className="text-sm font-bold text-slate-700 dark:text-slate-300 px-1">الصورة الخلفية</label>

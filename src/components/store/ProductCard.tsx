@@ -1,14 +1,14 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
 import type { Product } from '@/lib/supabase/types';
+import { Heart, ShoppingBag, Sparkles } from 'lucide-react';
 
-const seasonBadge: Record<string, { label: string; cls: string }> = {
-    صيف: { label: '☀️ صيفي', cls: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' },
-    شتاء: { label: '❄️ شتوي', cls: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' },
-    'كل الموسم': {
-        label: '🌀 كل الموسم',
-        cls: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
-    },
+const seasonBadge: Record<string, { label: string; emoji: string; bg: string; color: string }> = {
+    صيف:        { label: 'صيفي',      emoji: '☀️', bg: '#FFF3E0', color: '#E65100' },
+    شتاء:       { label: 'شتوي',      emoji: '❄️', bg: '#E3F2FD', color: '#1565C0' },
+    'كل الموسم':{ label: 'كل الموسم', emoji: '🌟', bg: '#F9FBE7', color: '#558B2F' },
 };
 
 interface Props {
@@ -22,77 +22,135 @@ export default function ProductCard({ product }: Props) {
     return (
         <Link
             href={`/product/${product.id}`}
-            className="group flex flex-col bg-white dark:bg-slate-800 rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 dark:border-slate-700/50 overflow-hidden transition-all duration-300 hover:-translate-y-1"
+            className="group flex flex-col rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 relative"
+            style={{
+                background: '#ffffff',
+                boxShadow: '0 4px 24px rgba(252,210,1,0.10), 0 1px 4px rgba(0,0,0,0.06)',
+                border: '2px solid rgba(252,210,1,0.18)',
+            }}
         >
-            {/* Image */}
-            <div className="relative w-full aspect-[4/5] overflow-hidden bg-slate-100 dark:bg-slate-700">
+            {/* Hover glow border */}
+            <div
+                className="absolute inset-0 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ boxShadow: '0 0 0 2.5px #FCD201, 0 8px 40px rgba(252,210,1,0.22)' }}
+            />
+
+            {/* ── Image ── */}
+            <div className="relative w-full aspect-[4/5] overflow-hidden rounded-t-[2rem]" style={{ background: '#FFFDE7' }}>
                 {mainImage ? (
-                    <img
-                        src={mainImage}
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                    <>
+                        <img
+                            src={mainImage}
+                            alt={product.name}
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </>
                 ) : (
-                    <div className="w-full h-full flex items-center justify-center text-5xl select-none">
-                        🛍️
+                    <div className="w-full h-full flex flex-col items-center justify-center" style={{ color: '#FCD201' }}>
+                        <ShoppingBag className="w-16 h-16 mb-2 opacity-40" />
+                        <span className="text-xs font-bold text-slate-400">لا توجد صورة</span>
                     </div>
                 )}
-                {/* Season badge overlay */}
+
+                {/* Season badge */}
                 {badge && (
-                    <span className={`absolute top-3 right-3 text-xs font-bold px-3 py-1 rounded-full shadow ${badge.cls}`}>
+                    <span
+                        className="absolute top-3 right-3 text-[11px] font-black px-3 py-1.5 rounded-full flex items-center gap-1 shadow-md"
+                        style={{ background: badge.bg, color: badge.color }}
+                    >
+                        <span>{badge.emoji}</span>
                         {badge.label}
                     </span>
                 )}
+
                 {/* Multi-image count */}
                 {product.images && product.images.length > 1 && (
-                    <span className="absolute bottom-3 left-3 text-xs bg-black/50 text-white px-2 py-0.5 rounded-full">
+                    <span
+                        className="absolute bottom-3 left-3 text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm"
+                        style={{ background: 'rgba(252,210,1,0.95)', color: '#1a1a1a' }}
+                    >
                         +{product.images.length - 1} صور
                     </span>
                 )}
+
+                {/* Quick actions */}
+                <div className="absolute top-3 left-3 flex flex-col gap-2 translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500 ease-out z-10">
+                    <button
+                        className="w-9 h-9 rounded-full flex items-center justify-center shadow-lg transition-colors duration-300"
+                        style={{ background: 'rgba(255,255,255,0.95)' }}
+                        onClick={(e) => { e.preventDefault(); }}
+                    >
+                        <Heart className="w-4 h-4 text-rose-400 hover:text-rose-500" />
+                    </button>
+                    <button
+                        className="w-9 h-9 rounded-full flex items-center justify-center shadow-lg transition-colors duration-300"
+                        style={{ background: 'rgba(255,255,255,0.95)' }}
+                        onClick={(e) => { e.preventDefault(); }}
+                    >
+                        <ShoppingBag className="w-4 h-4" style={{ color: '#FFA000' }} />
+                    </button>
+                </div>
             </div>
 
-            {/* Info */}
-            <div className="p-4 flex flex-col gap-2 flex-1">
+            {/* ── Info ── */}
+            <div className="p-5 flex flex-col gap-3 flex-1 relative bg-white">
+
+                {/* Floating price badge */}
+                <div
+                    className="absolute -top-5 left-5 px-4 py-2 rounded-2xl shadow-lg font-black text-base flex items-center gap-1.5 transition-transform duration-500 group-hover:-translate-y-1"
+                    style={{
+                        background: 'linear-gradient(135deg, #FCD201, #FFA000)',
+                        color: '#1a1a1a',
+                        boxShadow: '0 4px 18px rgba(252,210,1,0.45)',
+                    }}
+                >
+                    <Sparkles className="w-3.5 h-3.5 opacity-70" />
+                    <span dir="ltr">{product.price.toLocaleString('ar-EG')} <span className="text-xs font-bold">ج.م</span></span>
+                </div>
+
                 {/* Name */}
-                <h3 className="font-bold text-slate-900 dark:text-white line-clamp-2 text-sm leading-snug group-hover:text-primary transition-colors">
+                <h3
+                    className="font-black text-slate-800 line-clamp-2 text-sm leading-snug transition-colors duration-300 mt-2 group-hover:text-yellow-700"
+                >
                     {product.name}
                 </h3>
 
-                {/* Sizes */}
-                {product.sizes && product.sizes.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                        {product.sizes.slice(0, 4).map((s) => (
-                            <span
-                                key={s}
-                                className="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-xs font-semibold text-slate-500 dark:text-slate-400"
-                            >
-                                {s}
-                            </span>
-                        ))}
-                        {product.sizes.length > 4 && (
-                            <span className="px-2 py-0.5 rounded-lg bg-slate-100 dark:bg-slate-700 text-xs text-slate-400">
-                                +{product.sizes.length - 4}
-                            </span>
-                        )}
-                    </div>
-                )}
+                {/* Divider */}
+                <div className="h-px w-full rounded-full mt-auto" style={{ background: 'linear-gradient(to right, #FCD201, transparent)' }} />
 
-                {/* Colors */}
-                {product.colors && product.colors.length > 0 && (
-                    <div className="flex items-center gap-1">
-                        <span className="text-xs text-slate-400">الألوان:</span>
-                        <span className="text-xs text-slate-600 dark:text-slate-400">
-                            {product.colors.slice(0, 3).join('، ')}
-                            {product.colors.length > 3 && ` +${product.colors.length - 3}`}
-                        </span>
-                    </div>
-                )}
+                {/* Attributes */}
+                <div className="flex flex-col gap-2">
+                    {product.sizes && product.sizes.length > 0 && (
+                        <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-bold text-slate-400 shrink-0">المقاس</span>
+                            <div className="flex flex-wrap gap-1">
+                                {product.sizes.slice(0, 3).map((s) => (
+                                    <span
+                                        key={s}
+                                        className="px-2 py-0.5 rounded-lg text-[10px] font-black"
+                                        style={{ background: 'rgba(252,210,1,0.15)', color: '#996600' }}
+                                    >
+                                        {s}
+                                    </span>
+                                ))}
+                                {product.sizes.length > 3 && (
+                                    <span className="px-2 py-0.5 rounded-lg text-[10px] font-black bg-slate-100 text-slate-500">
+                                        +{product.sizes.length - 3}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    )}
 
-                {/* Price */}
-                <div className="mt-auto pt-2 border-t border-slate-100 dark:border-slate-700">
-                    <span className="text-lg font-black text-blue-600 dark:text-blue-400">
-                        {product.price.toLocaleString('ar-EG')} ج.م
-                    </span>
+                    {product.colors && product.colors.length > 0 && (
+                        <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-bold text-slate-400 shrink-0">الألوان</span>
+                            <span className="text-[11px] font-semibold text-slate-600 line-clamp-1">
+                                {product.colors.join('، ')}
+                            </span>
+                        </div>
+                    )}
                 </div>
             </div>
         </Link>

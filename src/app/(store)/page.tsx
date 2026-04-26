@@ -8,8 +8,6 @@ import { getProducts, getSections } from '@/app/actions/products';
 import { getBanners } from '@/app/actions/banners';
 import { getTestimonials } from '@/app/actions/testimonials';
 import { getOffers } from '@/app/actions/offers';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 export const dynamic = 'force-dynamic';
 
@@ -23,55 +21,72 @@ export default async function StorePage() {
     ]);
 
     return (
+        <div className="min-h-screen">
 
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+            {/* Decorative background blobs */}
+            <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+                <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full opacity-20 blur-3xl" style={{ background: '#FCD201' }} />
+                <div className="absolute top-1/3 -left-32 w-80 h-80 rounded-full opacity-10 blur-3xl" style={{ background: '#FFA000' }} />
+                <div className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full opacity-10 blur-3xl" style={{ background: '#FCD201' }} />
+            </div>
+
             {/* Banner */}
-            <BannerSlider banners={banners} />
+            <div className="relative z-10">
+                <BannerSlider banners={banners} />
+            </div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16" dir="rtl">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 relative z-10" dir="rtl">
 
                 {/* ── Sections ── */}
                 <section className="mt-12">
-                    <div className="flex items-center justify-between mb-6">
-                        <div>
-                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">الأقسام</h2>
-                            <p className="text-slate-500 text-sm mt-0.5">تصفّح حسب القسم</p>
+                    <div className="flex items-center gap-4 mb-8">
+                        {/* Decorative pill */}
+                        <div className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-black shadow-lg" style={{ background: 'linear-gradient(135deg, #FCD201, #FFA000)', color: '#1a1a1a' }}>
+                            <span className="text-lg">🎨</span>
+                            <span>الأقسام</span>
                         </div>
+                        <div className="flex-1 h-px" style={{ background: 'linear-gradient(to left, transparent, #FCD201, transparent)' }} />
+                        <p className="text-sm font-semibold" style={{ color: '#b8860b' }}>تصفّح حسب القسم</p>
                     </div>
+
                     {sections.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
                             {sections.map((section) => (
                                 <SectionCard key={section.id} section={section} />
                             ))}
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center justify-center py-12 text-slate-400 dark:text-slate-600 bg-white/50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800">
-                            <span className="text-4xl mb-2">📁</span>
-                            <p className="text-md font-bold">لا توجد أقسام حالياً</p>
+                        <div className="flex flex-col items-center justify-center py-16 rounded-3xl border-2 border-dashed" style={{ background: 'rgba(252,210,1,0.05)', borderColor: '#FCD201' }}>
+                            <span className="text-5xl mb-3">📁</span>
+                            <p className="text-base font-black" style={{ color: '#b8860b' }}>لا توجد أقسام حالياً</p>
                         </div>
                     )}
                 </section>
 
                 {/* ── Products ── */}
-                <section className="mt-14">
-                    <div className="flex justify-between mb-10">
-                        <h2 className="text-2xl font-black text-slate-900 dark:text-white">أحدث المنتجات</h2>
-                        <p className="text-slate-500 text-sm mt-0.5">
+                <section className="mt-20">
+                    <div className="flex items-center gap-4 mb-10">
+                        <div className="flex items-center gap-2 px-5 py-2 rounded-full text-sm font-black shadow-lg" style={{ background: 'linear-gradient(135deg, #FCD201, #FFA000)', color: '#1a1a1a' }}>
+                            <span className="text-lg">🛍️</span>
+                            <span>أحدث المنتجات</span>
+                        </div>
+                        <div className="flex-1 h-px" style={{ background: 'linear-gradient(to left, transparent, #FCD201, transparent)' }} />
+                        <p className="text-sm font-semibold" style={{ color: '#b8860b' }}>
                             {products.length > 0 ? `${products.length} منتج متاح` : 'لم يُضف منتجات بعد'}
                         </p>
                     </div>
 
                     {products.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
                             {products.map((product) => (
                                 <ProductCard key={product.id} product={product} />
                             ))}
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center justify-center py-24 text-slate-400 dark:text-slate-600">
-                            <span className="text-6xl mb-4">🛍️</span>
-                            <p className="text-lg font-bold">لا توجد منتجات حالياً</p>
-                            <p className="text-sm mt-1">تابعنا قريباً لمزيد من المنتجات!</p>
+                        <div className="flex flex-col items-center justify-center py-28 rounded-3xl border-2 border-dashed" style={{ background: 'rgba(252,210,1,0.05)', borderColor: '#FCD201' }}>
+                            <span className="text-7xl mb-5">🛍️</span>
+                            <p className="text-lg font-black" style={{ color: '#b8860b' }}>لا توجد منتجات حالياً</p>
+                            <p className="text-sm mt-1 text-slate-500">تابعنا قريباً لمزيد من المنتجات!</p>
                         </div>
                     )}
                 </section>
@@ -84,6 +99,5 @@ export default async function StorePage() {
             </div>
 
         </div>
-
     );
 }

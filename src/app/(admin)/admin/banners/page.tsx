@@ -33,7 +33,7 @@ export default async function AdminBannersPage() {
                                 alt={banner.title} 
                                 className="w-full h-full object-cover"
                             />
-                            <div className={`absolute inset-0 bg-gradient-to-r ${banner.color} opacity-60`}></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
                             <div className="absolute inset-0 flex flex-col justify-end p-4 text-white">
                                 <h3 className="font-bold text-lg leading-tight line-clamp-1">{banner.title}</h3>
                                 {!banner.is_active && (

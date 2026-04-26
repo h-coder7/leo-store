@@ -169,9 +169,12 @@ export default function CartClient({ initialItems }: { initialItems: CartClientI
                     <span className="text-blue-600 dark:text-blue-400">{total.toLocaleString("ar-EG")} ج.م</span>
                 </div>
 
-                <button className="w-full py-4 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black text-lg rounded-xl shadow-lg hover:shadow-blue-500/30 transition-all duration-200 mt-2">
+                <Link 
+                    href="/checkout"
+                    className="w-full py-4 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-black text-lg rounded-xl shadow-lg hover:shadow-blue-500/30 transition-all duration-200 mt-2 flex items-center justify-center"
+                >
                     إتمام الطلب
-                </button>
+                </Link>
             </div>
         </div>
     );
